@@ -1,6 +1,7 @@
 import { Logger } from '@nestjs/common';
 import { createConnection } from 'typeorm';
 import mongoose from 'mongoose';
+import { PatientEntity } from '../../resources/patients/entities/patient.entity';
 
 const logger = new Logger('DATABASE PROVIDER');
 
@@ -15,7 +16,9 @@ export const databaseProviders = [
         username: process.env.DATABASE_USER,
         password: process.env.DATABASE_PASSWORD,
         database: process.env.DATABASE_NAME,
-        entities: [],
+        entities: [
+          PatientEntity
+        ],
         synchronize: process.env.NODE_ENV === 'development' ? true : false,
       })
         .then((connection) => {

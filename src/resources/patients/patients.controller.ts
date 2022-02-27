@@ -12,6 +12,7 @@ import {
 import { PatientsService } from './patients.service';
 import { CreatePatientDto } from './dto/create-patient.dto';
 import { UpdatePatientDto } from './dto/update-patient.dto';
+import { PatientIdValidatorPipe } from 'src/pipes/validations/patient-id-validator.pipe';
 
 @Controller('patients')
 export class PatientsController {
@@ -29,14 +30,7 @@ export class PatientsController {
 
   @Get(':id')
   findOne(
-    @Param(
-      'id',
-      new ParseUUIDPipe({
-        exceptionFactory: () => {
-          throw new NotAcceptableException('Patient id es invalido');
-        },
-      }),
-    )
+    @Param('id', new PatientIdValidatorPipe())
     id: string,
   ) {
     return this.patientsService.findOne(id);
@@ -44,14 +38,7 @@ export class PatientsController {
 
   @Patch(':id')
   update(
-    @Param(
-      'id',
-      new ParseUUIDPipe({
-        exceptionFactory: () => {
-          throw new NotAcceptableException('Patient id es invalido');
-        },
-      }),
-    )
+    @Param('id', new PatientIdValidatorPipe())
     id: string,
     @Body() updatePatientDto: UpdatePatientDto,
   ) {
@@ -60,14 +47,7 @@ export class PatientsController {
 
   @Delete(':id')
   remove(
-    @Param(
-      'id',
-      new ParseUUIDPipe({
-        exceptionFactory: () => {
-          throw new NotAcceptableException('Patient id es invalido');
-        },
-      }),
-    )
+    @Param('id', new PatientIdValidatorPipe())
     id: string,
   ) {
     return this.patientsService.remove(id);

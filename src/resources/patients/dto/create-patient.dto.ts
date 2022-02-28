@@ -1,3 +1,4 @@
+import { ApiProperty } from "@nestjs/swagger";
 import { IsAlpha, IsEmail, IsInt, IsNotEmpty, IsOptional, IsString, Max, Min } from "class-validator";
 
 export class CreatePatientDto {
@@ -7,6 +8,11 @@ export class CreatePatientDto {
   @IsAlpha('en-US', {
     message: 'El nombre solo debe contener letras, el valor actual es: $value'
   })
+  @ApiProperty({
+    required: true,
+    description: 'Nombre del paciente',
+    example: 'jhon'
+  })
   name: string;
   
   @IsNotEmpty({
@@ -14,6 +20,11 @@ export class CreatePatientDto {
   })
   @IsAlpha('en-US', {
     message: 'El apellido solo debe contener letras, el valor actual es: $value'
+  })
+  @ApiProperty({
+    required: true,
+    description: 'Apellido del paciente',
+    example: 'Doe'
   })
   surname: string;
   
@@ -23,6 +34,11 @@ export class CreatePatientDto {
   @IsString({
     message: 'El telefono es invalido'
   })
+  @ApiProperty({
+    required: true,
+    description: 'Telefono del paciente',
+    example: '+971-4512245'
+  })
   phone: string;
 
   @IsNotEmpty({
@@ -30,6 +46,11 @@ export class CreatePatientDto {
   })
   @IsEmail({}, {
     message: 'El email es invalido, el valor actual es: $value'
+  })
+  @ApiProperty({
+    required: true,
+    description: 'Email del paciente',
+    example: 'jhondoe@gmail.com'
   })
   email: string;
   
@@ -45,11 +66,22 @@ export class CreatePatientDto {
   @Max(90, {
     message: 'La edad debe ser menor a $constraint1'
   })
+  @ApiProperty({
+    required: true,
+    description: 'Edad del paciente',
+    example: 16,
+    examples: [1, 59, 90]
+  })
   age: number;
   
   @IsOptional()
   @IsString({
     message: 'La direccion es invalida'
+  })
+  @ApiProperty({
+    required: false,
+    description: 'Direccion del paciente',
+    example: 'Liberty AV. nro. 265 - LA'
   })
   address: string;
 }

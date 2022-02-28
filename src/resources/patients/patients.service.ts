@@ -3,6 +3,7 @@ import { Repository } from 'typeorm';
 import { CreatePatientDto } from './dto/create-patient.dto';
 import { UpdatePatientDto } from './dto/update-patient.dto';
 import { PatientEntity } from './entities/patient.entity';
+import { DatabaseException } from '../../exceptions/database.exception';
 
 @Injectable()
 export class PatientsService {
@@ -17,11 +18,7 @@ export class PatientsService {
     try {
       return await this.patientRepository.save(createPatientDto);
     } catch (error) {
-      const errorMessage = 'Error al crear paciente en la DB'
-      this.Logger.error(errorMessage, error);
-      throw new InternalServerErrorException({
-        error: errorMessage
-      });
+      throw new DatabaseException('Error al crear paciente en la DB', error);
     }
   }
 
@@ -29,11 +26,7 @@ export class PatientsService {
     try {
       return await this.patientRepository.find();
     } catch (error) {
-      const errorMessage = 'Error al buscar pacientes en la DB'
-      this.Logger.error(errorMessage, error);
-      throw new InternalServerErrorException({
-        error: errorMessage
-      });
+      throw new DatabaseException('Error al buscar pacientes en la DB', error);
     }
   }
 
@@ -42,16 +35,12 @@ export class PatientsService {
     try {
       patientFound = await this.patientRepository.findOne(id);
     } catch (error) {
-      const errorMessage = 'Error al buscar el paciente en la DB'
-      this.Logger.error(errorMessage, error);
-      throw new InternalServerErrorException({
-        error: errorMessage
-      });
+      throw new DatabaseException('Error al buscar el paciente en la DB', error);
     }
     if (patientFound) {
       return patientFound;
     } else {
-      throw new NotFoundException('Paciente no encontrado')
+      throw new NotFoundException('Paciente no encontrado');
     }
   }
 
@@ -64,11 +53,7 @@ export class PatientsService {
       });
       return patientFound;
     } catch (error) {
-      const errorMessage = 'Error al actualizar el paciente en la DB'
-      this.Logger.error(errorMessage, error);
-      throw new InternalServerErrorException({
-        error: errorMessage
-      });
+      throw new DatabaseException('Error al actualizar el paciente en la DB', error);
     }
   }
 
@@ -77,11 +62,7 @@ export class PatientsService {
     try {
       await this.patientRepository.remove(patientFound);
     } catch (error) {
-      const errorMessage = 'Error al eliminar el paciente en la DB'
-      this.Logger.error(errorMessage, error);
-      throw new InternalServerErrorException({
-        error: errorMessage
-      });
+      throw new DatabaseException('Error al eliminar el paciente en la DB', error);
     }
   }
 }

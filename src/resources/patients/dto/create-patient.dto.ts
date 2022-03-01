@@ -84,4 +84,15 @@ export class CreatePatientDto {
     example: 'Liberty AV. nro. 265 - LA'
   })
   address: string;
+
+  @IsOptional()
+  @IsString({
+    message: 'El id de insurance es invalido'
+  })
+  @ApiProperty({
+    required: false,
+    description: 'Insurance del paciente',
+    example: '62158f931f44f1794654dc0a'
+  })
+  insuranceId: string;
 }

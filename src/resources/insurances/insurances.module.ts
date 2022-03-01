@@ -8,5 +8,6 @@ import { insuranceProviders } from './providers/insurance.provider';
   imports: [DatabaseModule],
   controllers: [InsurancesController],
   providers: [...insuranceProviders, InsurancesService],
+  exports: [InsurancesService]
 })
 export class InsurancesModule {}

@@ -28,4 +28,7 @@ export class PatientEntity {
   
   @UpdateDateColumn({ name: 'updated_at'})
   updatedAt: Date;
+
+  @Column('varchar', { name: 'insurance_id', default: null, nullable: true})
+  insuranceId: string;
 }

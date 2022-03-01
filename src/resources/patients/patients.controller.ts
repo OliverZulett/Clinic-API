@@ -8,6 +8,7 @@ import {
   Delete,
   ParseUUIDPipe,
   NotAcceptableException,
+  Query,
 } from '@nestjs/common';
 import { PatientsService } from './patients.service';
 import { CreatePatientDto } from './dto/create-patient.dto';
@@ -42,7 +43,16 @@ export class PatientsController {
   @ApiInternalServerErrorResponse({
     description: 'Error de base de datos'
   })
-  findAll() {
+  async findAll(
+    @Query('name') name?: string,
+    @Query('surname') surname?: string
+  ) {
+    if (name) {
+      return await this.patientsService.findAllFilterByName(name);
+    }
+    if (surname) {
+      return this.patientsService.findAllFilterByQuery('surname', surname);
+    }
     return this.patientsService.findAll();
   }
 

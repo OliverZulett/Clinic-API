@@ -18,8 +18,10 @@ import { PatientIdValidatorPipe } from 'src/pipes/validations/patient-id-validat
 import { ApiCreatedResponse, ApiInternalServerErrorResponse, ApiTags, ApiOkResponse, ApiNotFoundResponse, ApiNotAcceptableResponse } from '@nestjs/swagger';
 import { Patient } from './dto/patient';
 import { InsuranceVerificationGuard } from '../../guards/insurance-verification.guard';
+import { AuthGuard } from '@nestjs/passport';
 
 @ApiTags('Patients')
+@UseGuards(AuthGuard('basic'))
 @Controller('patients')
 export class PatientsController {
   constructor(private readonly patientsService: PatientsService) {}

@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { InsurancesService } from './insurances.service';
 import { CreateInsuranceDto } from './dto/create-insurance.dto';
@@ -20,9 +21,11 @@ import {
 import { Insurance } from './dto/insurance';
 import { InsuranceIdValidatorPipe } from '../../pipes/validations/insurance-id-validator.pipe';
 import { Patient } from '../patients/dto/patient';
+import { AuthGuard } from '@nestjs/passport';
 
 @ApiTags('Insurances')
 @Controller('insurances')
+@UseGuards(AuthGuard('basic'))
 export class InsurancesController {
   constructor(private readonly insurancesService: InsurancesService) {}
 

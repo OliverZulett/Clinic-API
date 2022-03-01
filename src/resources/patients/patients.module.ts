@@ -11,6 +11,9 @@ import { InsurancesModule } from '../insurances/insurances.module';
   providers: [
     ...patientProviders,
     PatientsService
+  ],
+  exports: [
+    PatientsService
   ]
 })
 export class PatientsModule {}

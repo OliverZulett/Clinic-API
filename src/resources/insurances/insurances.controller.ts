@@ -19,6 +19,7 @@ import {
 } from '@nestjs/swagger';
 import { Insurance } from './dto/insurance';
 import { InsuranceIdValidatorPipe } from '../../pipes/validations/insurance-id-validator.pipe';
+import { Patient } from '../patients/dto/patient';
 
 @ApiTags('Insurances')
 @Controller('insurances')
@@ -63,6 +64,19 @@ export class InsurancesController {
   })
   findOne(@Param('id', new InsuranceIdValidatorPipe()) id: string) {
     return this.insurancesService.findOne(id);
+  }
+
+  @Get(':id/patients')
+  @ApiOkResponse({
+    description: 'Patients encontrados con exito',
+    type: Patient,
+    isArray: true
+  })
+  @ApiInternalServerErrorResponse({
+    description: 'Error de base de datos',
+  })
+  findPatientsByinsuranceId(@Param('id', new InsuranceIdValidatorPipe()) id: string) {
+    return this.insurancesService.findPatientsByInsuranceId(id);
   }
 
   @Patch(':id')

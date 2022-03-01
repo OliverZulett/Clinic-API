@@ -64,6 +64,20 @@ export class PatientsService {
     }
   }
 
+  async findAllByInsuranceId(insuranceId: string) {
+    try {
+      return await this.patientRepository
+        .createQueryBuilder('patient')
+        .where('patient.insurance_id = :value', { value: `${insuranceId}` })
+        .getMany();
+    } catch (error) {
+      throw new DatabaseException(
+        `Error al buscar pacientes filtrados por insurance id en la DB`,
+        error,
+      );
+    }
+  }
+
   async findOne(id: string) {
     let patientFound = null;
     try {

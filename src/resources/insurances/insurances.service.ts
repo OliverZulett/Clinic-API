@@ -4,12 +4,14 @@ import { UpdateInsuranceDto } from './dto/update-insurance.dto';
 import { InsuranceModel } from './interfaces/insurance.interface';
 import { Model } from 'mongoose';
 import { DatabaseException } from '../../exceptions/database.exception';
+import { PatientsService } from '../patients/patients.service';
 
 @Injectable()
 export class InsurancesService {
   constructor(
     @Inject('INSURANCE_MODEL')
     private readonly insuranceModel: Model<InsuranceModel>,
+    private readonly patientsService: PatientsService
   ) {}
 
   async create(createInsuranceDto: CreateInsuranceDto) {
@@ -26,6 +28,10 @@ export class InsurancesService {
     } catch (error) {
       throw new DatabaseException('Error al buscar insurances en la DB', error);
     }
+  }
+
+  async findPatientsByInsuranceId(id: string) {
+    return await this.patientsService.findAllByInsuranceId(id);
   }
 
   async findOne(id: string) {

@@ -15,12 +15,13 @@ import { PatientsService } from './patients.service';
 import { CreatePatientDto } from './dto/create-patient.dto';
 import { UpdatePatientDto } from './dto/update-patient.dto';
 import { PatientIdValidatorPipe } from 'src/pipes/validations/patient-id-validator.pipe';
-import { ApiCreatedResponse, ApiInternalServerErrorResponse, ApiTags, ApiOkResponse, ApiNotFoundResponse, ApiNotAcceptableResponse } from '@nestjs/swagger';
+import { ApiCreatedResponse, ApiInternalServerErrorResponse, ApiTags, ApiOkResponse, ApiNotFoundResponse, ApiNotAcceptableResponse, ApiBasicAuth, ApiQuery } from '@nestjs/swagger';
 import { Patient } from './dto/patient';
 import { InsuranceVerificationGuard } from '../../guards/insurance-verification.guard';
 import { AuthGuard } from '@nestjs/passport';
 
 @ApiTags('Patients')
+@ApiBasicAuth()
 @UseGuards(AuthGuard('basic'))
 @Controller('patients')
 export class PatientsController {
@@ -40,6 +41,14 @@ export class PatientsController {
   }
 
   @Get()
+  @ApiQuery({
+    name: 'name',
+    required: false
+  })
+  @ApiQuery({
+    name: 'surname',
+    required: false
+  })
   @ApiOkResponse({
     description: 'Pacientes encontrados con exito',
     type: Patient,

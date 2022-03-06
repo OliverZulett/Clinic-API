@@ -22,8 +22,10 @@ import { Insurance } from './dto/insurance';
 import { InsuranceIdValidatorPipe } from '../../pipes/validations/insurance-id-validator.pipe';
 import { Patient } from '../patients/dto/patient';
 import { AuthGuard } from '@nestjs/passport';
+import { ApiBasicAuth } from '@nestjs/swagger';
 
 @ApiTags('Insurances')
+@ApiBasicAuth()
 @Controller('insurances')
 @UseGuards(AuthGuard('basic'))
 export class InsurancesController {

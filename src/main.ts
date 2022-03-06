@@ -14,6 +14,7 @@ async function bootstrap() {
       .addTag('HealthCheck', 'endpoint encargado de verificar el status de la API')
       .addTag('Patients', 'Endpoints del recurso pacientes')
       .addTag('Insurances', 'Endpoints del recurso aseguradoras')
+      .addBasicAuth()
       .build();
     const document = SwaggerModule.createDocument(app, config);
     SwaggerModule.setup('api', app, document);
